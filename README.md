@@ -195,9 +195,9 @@ Where:
 ### B. Dynamic Autoregressive Memory Model
 Autoregressive decoding memory scales dynamically with context length $L$:
 
-$$M_{\text{runtime}}(t) = M_{\text{weights}} + M_{\text{activations}} + M_{\text{kv\_cache}}(t)$$
+$$M_{\text{runtime}}(t) = M_{\text{weights}} + M_{\text{activations}} + M_{\text{kv-cache}}(t)$$
 
-$$M_{\text{kv\_cache}}(\text{MB}) = \frac{2 \cdot N_L \cdot N_H \cdot D_H \cdot L \cdot B}{1024^2}$$
+$$M_{\text{kv-cache}}(\text{MB}) = \frac{2 \cdot N_L \cdot N_H \cdot D_H \cdot L \cdot B}{1024^2}$$
 
 Time-to-exhaustion headroom computed in real-time by `VRAMProjector`:
 
