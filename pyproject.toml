@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "apex-rig"
+version = "1.0.0"
+description = "Sovereign Multi-Harness Aggregator, Hardware-Aware Cognitive Router & Agent Mesh"
+readme = "README.md"
+authors = [{ name = "Ahmed Hassan", email = "ahmed@aah20.com" }]
+license = { text = "Apache-2.0" }
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Build Tools",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+keywords = [
+    "agent-harness",
+    "openrig",
+    "openrouter",
+    "llm-router",
+    "llmfit",
+    "bedrock",
+    "vram-management",
+    "multi-agent",
+    "claude-code",
+    "aider",
+]
+requires-python = ">=3.9"
+dependencies = []
+
+[project.scripts]
+apexrig = "apex_rig.cli:main"
