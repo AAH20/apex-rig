@@ -30,18 +30,24 @@ graph TD
         Run["LocalRunner"]:::slate
     end
 
-    subgraph AdapterSubsystem ["Enterprise Grid Adapters"]
-        FW["FirmwareAdapter"]:::slate
-        CF["ContextFabricAdapter"]:::slate
-        CM["CapitalMatrixAdapter"]:::slate
+    subgraph GridAdapters ["Enterprise Grid & Ecosystem Adapters"]
+        FW["FirmwareAdapter (apex-firmware)"]:::slate
+        CF["ContextFabricAdapter (apex-contextfabric)"]:::slate
+        CM["CapitalMatrixAdapter (apex-capitalmatrix)"]:::slate
+        SN["StarNetAdapter (Desktop Station)"]:::slate
+        HD["HeraldOSAdapter (Hermes Agent)"]:::slate
+        PC["PaperclipAdapter (Company OS)"]:::slate
+        TP["TelepathyBusAdapter (IPC Ring)"]:::slate
+        IK["ImmuneKernelAdapter (Zero-Trust)"]:::slate
+        AD["AgentDiffAdapter (AST Validator)"]:::slate
     end
 
     Client --> Orch
-    Orch --> Sup & Ent & Fit & FW
+    Orch --> Sup & Ent & Fit
     Sup --> Trie & Journ
     Ent --> Pool & Arb
     Fit --> VRAM & Run
-    Orch --> CF & CM
+    Orch --> FW & CF & CM & SN & HD & PC & TP & IK & AD
 ```
 
 ---
@@ -71,7 +77,33 @@ sequenceDiagram
 
 ---
 
-## 3. Speculative Workspace Transaction State Machine
+## 3. Paperclip Employee Governance & Herald Mission Flow ($\le 5$ Lifelines)
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as Herald OS User
+    participant Herald as Herald OS Bridge
+    participant Rig as Apex Rig Mesh
+    participant Paperclip as Paperclip Corp OS
+    participant Diff as Agent Diff Scanner
+
+    User->>Herald: Submit Mission Directive
+    Herald->>Rig: Initialize Task Spec
+    Rig->>Paperclip: Verify Employee Budget & Clearance
+    alt Budget Exceeded or Unauthorized
+        Paperclip-->>Rig: Halt Task (Budget Exceeded)
+    else Budget Approved
+        Rig->>Diff: Scan Staged AST Diff & Blast Radius
+        Diff-->>Rig: Diff Approved (Guards Intact)
+        Rig->>Paperclip: Record Payroll Spend
+        Rig-->>Herald: Mission Completed
+    end
+```
+
+---
+
+## 4. Speculative Workspace Transaction State Machine
 
 ```mermaid
 stateDiagram-v2

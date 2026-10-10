@@ -341,11 +341,20 @@ apexrig report
 
 ---
 
-## 7. Enterprise Grid Integration (`AAH20`)
+## 7. Enterprise Grid & Ecosystem Integration (`AAH20`)
 
-Apex Rig acts as the central orchestration mesh connecting existing sovereign repositories:
+Apex Rig acts as the central orchestration mesh connecting the sovereign agent ecosystem:
 
-- **[`AAH20/apex-firmware`](https://github.com/AAH20/apex-firmware)**: Paces parallel inference execution batches in $0.50\mu\text{s}$ microcode phase intervals, preventing VRM inductive droop trips and voltage collapse.
+### Desktop & Agent OS Integrations
+- **StarNet Integration (`apex_rig/adapters/starnet_adapter.py`)**: Connects to the local-first desktop agent workspace (`StarStation-Alpha`). Dispatches work across capability rooms (Engineering Bay, Command Bridge, Security Air Lock, Telemetry Deck) while enforcing on-device VRAM residency and zero cloud leaks for local rooms.
+- **Herald OS & Hermes Agent (`apex_rig/adapters/herald_os_adapter.py`)**: Seamless bridge to Herald OS (the agent-native desktop interface for Nous Research's Hermes Agent). Intercepts user desktop mission directives, routes multi-modal routines, and provides transactional execution sandboxing via `WorkspaceJournal`.
+- **Paperclip Company OS & `hermes-paperclip-adapter` (`apex_rig/adapters/paperclip_adapter.py`)**: Interacts directly with **[`AAH20/hermes-paperclip-adapter`](https://github.com/AAH20/hermes-paperclip-adapter)** and **[`AAH20/paperclip`](https://github.com/AAH20/paperclip)**. Treats AI agents as corporate employees with departmental org charts, strict token payroll spend caps, and mandatory managerial approval gates whenever an agent's code modifications exceed safe blast radius thresholds.
+
+### Sovereign High-Performance Subsystems
+- **[`AAH20/agent-telepathy-bus`](https://github.com/AAH20/agent-telepathy-bus)**: Replaces HTTP socket overhead with a zero-copy shared-memory IPC ring buffer, allowing co-located harnesses to exchange AST state and token streams in $0.42\mu\text{s}$.
+- **[`AAH20/agent-immune-kernel`](https://github.com/AAH20/agent-immune-kernel)**: Enforces Denning information flow security lattices, credential firewalls, and capability attenuation, instantly quarantining Byzantine or hallucinating agents before unauthorized file system access occurs.
+- **[`AAH20/agent-diff`](https://github.com/AAH20/agent-diff)**: Performs automated visual AST diff analysis, scoring change blast radius and detecting silent guard removals before staged mutations are committed.
+- **[`AAH20/apex-firmware`](https://github.com/AAH20/apex-firmware)**: Paces parallel inference execution batches in $0.50\mu\text{s}$ microcode phase intervals, preventing VRM inductive droop trips and voltage collapse on Blackwell Ultra / Vera Rubin / MI350 silicon.
 - **[`AAH20/apex-contextfabric`](https://github.com/AAH20/apex-contextfabric)**: Offloads inactive KV-cache pages across tiered DRAM and NVMe virtual memory when the 85% VRAM watermark is breached.
 - **[`AAH20/apex-specagent`](https://github.com/AAH20/apex-specagent)**: Coordinates speculative multi-agent execution branches and rollback trees with fast small-model proposals.
 - **[`AAH20/apex-decisioncore`](https://github.com/AAH20/apex-decisioncore)**: Interfaces with sub-microsecond in-memory decision routing matrices.

@@ -43,6 +43,12 @@ from apex_rig.adapters.contextfabric_adapter import ContextFabricAdapter
 from apex_rig.adapters.specagent_adapter import SpecAgentAdapter
 from apex_rig.adapters.decisioncore_adapter import DecisionCoreAdapter
 from apex_rig.adapters.capitalmatrix_adapter import CapitalMatrixAdapter
+from apex_rig.adapters.starnet_adapter import StarNetAdapter
+from apex_rig.adapters.herald_os_adapter import HeraldOSAdapter
+from apex_rig.adapters.paperclip_adapter import PaperclipAdapter
+from apex_rig.adapters.telepathy_bus_adapter import TelepathyBusAdapter
+from apex_rig.adapters.immune_kernel_adapter import ImmuneKernelAdapter
+from apex_rig.adapters.agent_diff_adapter import AgentDiffAdapter
 
 
 class ApexRigOrchestrator:
@@ -82,6 +88,12 @@ class ApexRigOrchestrator:
         self.specagent_adapter = SpecAgentAdapter()
         self.decisioncore_adapter = DecisionCoreAdapter()
         self.capitalmatrix_adapter = CapitalMatrixAdapter()
+        self.starnet_adapter = StarNetAdapter()
+        self.herald_adapter = HeraldOSAdapter()
+        self.paperclip_adapter = PaperclipAdapter()
+        self.telepathy_adapter = TelepathyBusAdapter()
+        self.immune_adapter = ImmuneKernelAdapter()
+        self.diff_adapter = AgentDiffAdapter()
 
         if auto_initialize:
             self._bootstrap_rig()
@@ -161,7 +173,21 @@ class ApexRigOrchestrator:
             else:
                 target_harness = "aider-01"
 
+        # Check Immune Kernel Capability Authorization
+        if not self.immune_adapter.check_capability(target_harness, "execute_task", prompt):
+            raise PermissionError(f"ImmuneKernel: Harness '{target_harness}' denied access to prompt resource")
+
+        # Telepathy Bus Broadcast
+        telepathy_msg_id = self.telepathy_adapter.broadcast_telepathy(
+            sender_harness=target_harness,
+            topic="agent_task_dispatch",
+            payload={"task_id": tid, "model_id": routing_decision.chosen_model.model_id},
+        )
+
         result = self.supervisor.execute_immediate(task, preferred_harness_id=target_harness)
+
+        # Paperclip Corporate Governance Recording
+        self.paperclip_adapter.record_payroll_spend("emp-dev-01", result.cost_usd)
 
         # 7. Record FinOps Expenditure
         finops_entry = self.capitalmatrix_adapter.record_expenditure(
@@ -179,6 +205,8 @@ class ApexRigOrchestrator:
             "stagger_pacing_us": stagger_us,
             "key_used": key_slot.key_id if key_slot else "local",
             "finops": finops_entry,
+            "telepathy_msg_id": telepathy_msg_id,
+            "paperclip_company": self.paperclip_adapter.company_name,
         }
 
         return (result, routing_decision, metadata)
@@ -221,4 +249,10 @@ class ApexRigOrchestrator:
             "hardware": self.hardware_prober.probe(),
             "finops_cumulative_spend": self.capitalmatrix_adapter.cumulative_spend_usd,
             "firmware_droop_mv": self.firmware_adapter.get_pdn_health()["peak_droop_mv"],
+            "starnet": self.starnet_adapter.get_station_telemetry(),
+            "herald_os": self.herald_adapter.get_herald_status(),
+            "paperclip_corp": self.paperclip_adapter.get_company_ledger(),
+            "telepathy_bus": self.telepathy_adapter.get_bus_stats(),
+            "immune_kernel": self.immune_adapter.get_security_posture(),
+            "agent_diff": self.diff_adapter.get_diff_metrics(),
         }
